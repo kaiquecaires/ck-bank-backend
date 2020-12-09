@@ -9,8 +9,16 @@ export class CreateUserService {
     this.userRepository = userRepository;
   }
 
-  public async execute(user: Omit<User, 'id'>): Promise<User> {
-    const response = await this.userRepository.createAccount(user);
+  public async execute({ email, password }: Omit<User, 'id'>): Promise<User> {
+    if(!email) {
+      throw new AppError("Missing E-mail");
+    }
+
+    if(!password) {
+      throw new AppError("Missing E-mail");
+    }
+
+    const response = await this.userRepository.createAccount({ email, password });
     return response;
   }
 }
