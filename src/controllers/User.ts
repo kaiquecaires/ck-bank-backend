@@ -5,6 +5,6 @@ export class User {
   async createAccount(req: Request, res: Response) {
     const createUserService = new CreateUserService();
     const response = await createUserService.execute();
-    res.send(response);
+    res.send(req.body);
   }
 }

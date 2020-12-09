@@ -5,6 +5,6 @@ const userRoutes = Router();
 
 const user = new User();
 
-userRoutes.get('/createAccount' , user.createAccount);
+userRoutes.post('/createAccount' , user.createAccount);
 
 export default userRoutes;
