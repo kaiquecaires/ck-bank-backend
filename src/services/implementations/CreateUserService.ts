@@ -1,5 +1,16 @@
+import { User } from "../../dtos/User";
+import { AppError } from "../../errors/AppError";
+import { UserRepository } from "../../repositories/UserRepository";
+
 export class CreateUserService {
-  public async execute(): Promise<String> {
-    return new Promise(resolve => resolve("Ok"));
+  private userRepository: UserRepository;
+
+  constructor(userRepository: UserRepository) {
+    this.userRepository = userRepository;
+  }
+
+  public async execute(user: Omit<User, 'id'>): Promise<User> {
+    const response = await this.userRepository.createAccount(user);
+    return response;
   }
 }

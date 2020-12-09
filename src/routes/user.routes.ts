@@ -1,10 +1,15 @@
 import { Router, Request, Response } from 'express';
-import { User } from '../controllers/User'; 
+import { UserController } from '../controllers/UserController'; 
+import { FakeUserRepository } from '../typeorm/repositories/fakes/FakeUserRepository';
 
 const userRoutes = Router();
 
-const user = new User();
+const userRepository = new FakeUserRepository();
 
-userRoutes.post('/createAccount' , user.createAccount);
+const userController = new UserController(userRepository);
+
+userRoutes.post('/createAccount' , (req: Request, res: Response) => {
+  userController.createAccount(req, res);
+});
 
 export default userRoutes;
