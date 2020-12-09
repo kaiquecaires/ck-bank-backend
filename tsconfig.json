@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
-      "target": "es6",
+      "target": "es5",
       "module": "commonjs",
       "outDir": "dist",
       "rootDir": "./src",
       "allowJs": true,
-      "esModuleInterop": true
+      "esModuleInterop": true,
+      "emitDecoratorMetadata": false,
+      "experimentalDecorators": true
   },
   "include": [
       "src/**/*.ts"
