@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
-import { UserRepository } from '../repositories/UserRepository';
+import { IUserRepository } from '../repositories/IUserRepository';
 import { CreateUserService } from '../services/implementations/CreateUserService';
 
 export class UserController {
-  private userRepository: UserRepository;
+  private userRepository: IUserRepository;
 
-  constructor(userRepository: UserRepository) {
+  constructor(userRepository: IUserRepository) {
     this.userRepository = userRepository;
   }
 

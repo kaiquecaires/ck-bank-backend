@@ -1,7 +1,8 @@
 import { User } from '../../../dtos/User';
 import { IUserRepository } from '../../../repositories/IUserRepository';
+import { getRepository } from 'typeorm';
 
-export class FakeUserRepository implements IUserRepository {
+export class UserRepository implements IUserRepository {
   private users: User[];
 
   constructor() {
