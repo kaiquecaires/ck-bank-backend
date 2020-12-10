@@ -1,24 +1,21 @@
+import { getRepository, Repository } from 'typeorm';
 import { User } from '../../../dtos/User';
 import { IUserRepository } from '../../../repositories/IUserRepository';
-import { getRepository } from 'typeorm';
+import { User as UserEntitie } from '../../entities/User';
 
 export class UserRepository implements IUserRepository {
-  private users: User[];
-
-  constructor() {
-    this.users = [];
-  }
-
-  public async createAccount({ email, password }: Omit<User, 'id'>): Promise<User> {
-
-    const user = {
+  private ormRepository: Repository<UserEntitie>;
+  
+  public async createAccount({ email, password, name }: Omit<User, 'id'>): Promise<User> {
+    this.ormRepository = getRepository(UserEntitie);
+    const user = this.ormRepository.create({
       email,
       password,
-      id: 'random id'
-    };
+      name
+    });
 
-    this.users.push(user);
+    await this.ormRepository.save(user);
 
-    return new Promise(resolve => resolve(user));
+    return user; 
   }
 }

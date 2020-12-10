@@ -5,21 +5,21 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('varchar')
+  @Column({ type: 'varchar' })
   email: string;
 
-  @Column('varchar')
+  @Column({ type: 'varchar' })
   password: string;
 
-  @Column('varchar')
+  @Column({ type: 'varchar' })
   avatar_url: string;
 
-  @Column('varchar')
+  @Column({ type: 'varchar' })
   name: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'date' })
   created_at: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ type: 'date' })
   updated_at: Date
 }

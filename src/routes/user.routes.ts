@@ -1,10 +1,10 @@
 import { Router, Request, Response } from 'express';
 import { UserController } from '../controllers/UserController'; 
-import { FakeUserRepository } from '../typeorm/repositories/fakes/FakeUserRepository';
+import { UserRepository } from '../typeorm/repositories/implementations/UserRepository';
 
 const userRoutes = Router();
 
-const userRepository = new FakeUserRepository();
+const userRepository = new UserRepository();
 
 const userController = new UserController(userRepository);
 
