@@ -1,8 +1,9 @@
 import 'reflect-metadata';
 import 'express-async-errors';
+import './typeorm';
+import 'dotenv/config';
 import express from 'express';
 import routes from './routes';
-import './typeorm';
 
 const app = express();
 app.use(express.json());

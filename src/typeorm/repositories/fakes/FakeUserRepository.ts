@@ -1,14 +1,14 @@
-import { User } from '../../../dtos/User';
+import { IUser } from '../../../dtos/IUser';
 import { IUserRepository } from '../../../repositories/IUserRepository';
 
 export class FakeUserRepository implements IUserRepository {
-  private users: User[];
+  private users: IUser[];
 
   constructor() {
     this.users = [];
   }
 
-  public async createAccount({ email, password, name }: Omit<User, 'id'>): Promise<User> {
+  public async createUser({ email, password, name }: Omit<IUser, 'id'>): Promise<IUser> {
 
     const user = {
       email,
@@ -20,5 +20,11 @@ export class FakeUserRepository implements IUserRepository {
     this.users.push(user);
 
     return new Promise(resolve => resolve(user));
+  }
+
+  public async findByEmail(email: string): Promise<IUser> {
+    const user = this.users.filter(user => user.email === email);
+
+    return user[0];
   }
 }

@@ -1,5 +1,6 @@
-import { User } from '../dtos/User';
+import { IUser } from '../dtos/IUser';
 
 export interface IUserRepository {
-  createAccount(user: Omit<User, 'id'>): Promise<User>;
+  createUser(user: Omit<IUser, 'id'>): Promise<IUser>;
+  findByEmail(email: string): Promise<IUser>;
 }

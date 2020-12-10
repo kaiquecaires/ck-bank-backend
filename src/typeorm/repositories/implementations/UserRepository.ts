@@ -1,13 +1,18 @@
 import { getRepository, Repository } from 'typeorm';
-import { User } from '../../../dtos/User';
+import { IUser } from '../../../dtos/IUser';
 import { IUserRepository } from '../../../repositories/IUserRepository';
 import { User as UserEntitie } from '../../entities/User';
 
 export class UserRepository implements IUserRepository {
   private ormRepository: Repository<UserEntitie>;
-  
-  public async createAccount({ email, password, name }: Omit<User, 'id'>): Promise<User> {
+
+  private initRepository () {
     this.ormRepository = getRepository(UserEntitie);
+  }
+  
+  public async createUser({ email, password, name }: Omit<IUser, 'id'>): Promise<IUser> {
+    this.initRepository();
+
     const user = this.ormRepository.create({
       email,
       password,
@@ -17,5 +22,17 @@ export class UserRepository implements IUserRepository {
     await this.ormRepository.save(user);
 
     return user; 
+  }
+
+  public async findByEmail(email: string): Promise<IUser> {
+    this.initRepository();
+
+    const user = await this.ormRepository.findOne({
+      where: {
+        email,
+      }
+    });
+
+    return user;
   }
 }
