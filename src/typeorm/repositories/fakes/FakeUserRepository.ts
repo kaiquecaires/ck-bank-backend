@@ -8,11 +8,12 @@ export class FakeUserRepository implements IUserRepository {
     this.users = [];
   }
 
-  public async createAccount({ email, password }: Omit<User, 'id'>): Promise<User> {
+  public async createAccount({ email, password, name }: Omit<User, 'id'>): Promise<User> {
 
     const user = {
       email,
       password,
+      name,
       id: 'random id'
     };
 
