@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { UserController } from '../controllers/UserController'; 
+import { auth } from '../middlewares/auth';
 import { UserRepository } from '../typeorm/repositories/implementations/UserRepository';
 
 const userRoutes = Router();
@@ -16,6 +17,12 @@ userRoutes.post('/createAccount' , (req: Request, res: Response) => {
 
 userRoutes.post('/createSession', (req: Request, res: Response) => {
   userControllerFactory().createSession(req, res);
+});
+
+userRoutes.use(auth);
+
+userRoutes.get('/testeAuth', (req: Request, res: Response) => {
+  res.send(req.user);
 });
 
 
