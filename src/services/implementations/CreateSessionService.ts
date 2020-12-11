@@ -1,5 +1,7 @@
+import { classToClass } from 'class-transformer';
 import { IUser } from "../../dtos/IUser";
 import { AppError } from "../../errors/AppError";
+import { ITokenProvider } from "../../providers/TokenProvider/models/ITokenProvider";
 import { IUserRepository } from "../../repositories/IUserRepository";
 
 interface IResponse {
@@ -14,9 +16,14 @@ interface IRequest {
 
 export class CreateSessionService {
   private userRepository: IUserRepository;
+  private tokenProvider: ITokenProvider;
 
-  constructor(userRepository: IUserRepository) {
+  constructor(
+    userRepository: IUserRepository,
+    tokenProvider: ITokenProvider
+  ) {
     this.userRepository = userRepository;
+    this.tokenProvider = tokenProvider;
   }
 
   public async execute({ email, password }: IRequest): Promise<IResponse> {
@@ -38,9 +45,11 @@ export class CreateSessionService {
       throw new AppError("Incorrect e-mail/password");
     }
 
+    const token = await this.tokenProvider.generateToken(user.id);
+
     return {
-      user,
-      token: 'teste'
+      user: classToClass(user),
+      token,
     }
   }
 }

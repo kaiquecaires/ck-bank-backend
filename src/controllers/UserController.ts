@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { TokenProvider } from '../providers/TokenProvider/implementations/TokenProvider';
 import { IUserRepository } from '../repositories/IUserRepository';
 import { CreateSessionService } from '../services/implementations/CreateSessionService';
 import { CreateUserService } from '../services/implementations/CreateUserService';
@@ -22,7 +23,11 @@ export class UserController {
 
   public async createSession(req: Request, res: Response) {
     try {
-      const createSessionService = new CreateSessionService(this.userRepository);
+      const tokenProvider = new TokenProvider();
+      const createSessionService = new CreateSessionService(
+        this.userRepository,
+        tokenProvider
+      );
       const response = await createSessionService.execute(req.body);
       res.send(response);
     } catch(error) {
