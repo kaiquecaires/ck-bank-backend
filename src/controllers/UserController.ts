@@ -17,7 +17,7 @@ export class UserController {
       const response = await createUserService.execute(req.body);
       res.send(response);
     } catch(error) {
-      res.send(error);
+      res.status(error.statusCode).send(error);
     }
   }
 
@@ -31,7 +31,7 @@ export class UserController {
       const response = await createSessionService.execute(req.body);
       res.send(response);
     } catch(error) {
-      res.send(error);
+      res.status(error.statusCode).send(error);
     }
   }
 }

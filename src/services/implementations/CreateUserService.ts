@@ -10,6 +10,12 @@ export class CreateUserService {
   }
 
   public async execute({ email, password, name }: Omit<IUser, 'id'>): Promise<IUser> {
+    const queryEmail = this.userRepository.findByEmail(email);
+
+    if(queryEmail) {
+      throw new AppError("E-mail already exists");
+    }
+
     if(!email) {
       throw new AppError("Missing E-mail");
     }
