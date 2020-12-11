@@ -8,8 +8,11 @@ The project is about a bank to transfer money between people.
 
 ## `Tools`
 
-[ X ] Typescript <br />
-[ X ] Express
+[ x ] Typescript <br />
+[ x ] Express <br />
+[ x ] Typeorm <br />
+[ x ] postgres <br />
+[ x ] Json Web Token <br />
 
 ## `Links`
 
