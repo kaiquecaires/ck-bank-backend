@@ -24,7 +24,7 @@ export class UserRepository implements IUserRepository {
     return user; 
   }
 
-  public async findByEmail(email: string): Promise<IUser> {
+  public async findByEmail(email: string): Promise<IUser | undefined> {
     this.initRepository();
 
     const user = await this.ormRepository.findOne({
@@ -36,7 +36,7 @@ export class UserRepository implements IUserRepository {
     return user;
   }
 
-  public async findById(id: string): Promise<IUser> {
+  public async findById(id: string): Promise<IUser | undefined> {
     this.initRepository();
 
     const user = await this.ormRepository.findOne(id);

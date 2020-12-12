@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { UserController } from '../controllers/UserController'; 
 import { auth } from '../middlewares/auth';
+import { HashProvider } from '../providers/HashProvider/implementations/HashProvider';
 import { UserRepository } from '../typeorm/repositories/implementations/UserRepository';
 
 const userRoutes = Router();
@@ -8,7 +9,11 @@ const userRoutes = Router();
 
 const userControllerFactory = (): UserController => {
   const userRepository = new UserRepository();
-  return new UserController(userRepository);
+  const hashProvider = new HashProvider();
+  return new UserController(
+    userRepository,
+    hashProvider
+  );
 }
 
 userRoutes.post('/createAccount' , (req: Request, res: Response) => {
