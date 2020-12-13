@@ -13,6 +13,7 @@ The project is about a bank to transfer money between people.
 [ x ] Typeorm <br />
 [ x ] postgres <br />
 [ x ] Json Web Token <br />
+[ x ] Hash Password
 
 ## `Links`
 

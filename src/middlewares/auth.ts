@@ -5,7 +5,7 @@ import { TokenProvider } from '../providers/TokenProvider/implementations/TokenP
 export async function auth (req: Request, res:Response, next: NextFunction) {
   const tokenProvider = new TokenProvider();
 
-  if(! req.headers.authorization) {
+  if(!req.headers.authorization) {
     res.send(new AppError('Missing JWT Token'));
     return;
   }
