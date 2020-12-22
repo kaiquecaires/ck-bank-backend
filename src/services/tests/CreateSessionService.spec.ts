@@ -27,4 +27,18 @@ describe('CreateUser', () => {
 
       expect(user.name).toBe('kaique caires');
   });
+
+  it('should be able ensure the hashed provider was called', async () => {
+    jest.spyOn(fakeHashProvider, 'hashed').mockImplementationOnce(async () => {
+      return '123456'
+    });
+
+    await createUserService.execute({
+      email: 'teste@teste.com',
+      name: 'kaique caires',
+      password: '123456'
+    });
+
+    expect(fakeHashProvider.hashed).toHaveBeenCalledWith('123456');
+  });
 });
