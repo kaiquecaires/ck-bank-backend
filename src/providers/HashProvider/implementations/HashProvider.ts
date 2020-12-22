@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt';
-import { AppError } from '../../../errors/AppError';
 import { IHashProvider } from '../models/IHashProvider';
 
 export class HashProvider implements IHashProvider {

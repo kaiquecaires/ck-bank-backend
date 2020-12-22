@@ -14,7 +14,7 @@ export class FakeUserRepository implements IUserRepository {
       email,
       password,
       name,
-      id: 'random id'
+      id: String(new Date().getTime())
     };
 
     this.users.push(user);
@@ -24,6 +24,12 @@ export class FakeUserRepository implements IUserRepository {
 
   public async findByEmail(email: string): Promise<IUser> {
     const user = this.users.filter(user => user.email === email);
+
+    return user[0];
+  }
+
+  public async findById(id: string): Promise<IUser> {
+    const user = this.users.filter(user => user.id === id);
 
     return user[0];
   }
