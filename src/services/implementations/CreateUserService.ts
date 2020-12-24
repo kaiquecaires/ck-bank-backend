@@ -15,25 +15,22 @@ export class CreateUserService {
     this.hashProvider = hashProvider;
   }
 
-  public async execute({ email, password, name }: Omit<IUser, 'id'>): Promise<IUser> {
+  public async execute(user : Omit<IUser, 'id'>): Promise<IUser> {
+    const { email, password, name } = user;
+    
+    const fields = ['email', 'password', 'name'];
+
+    fields.map(field => {
+      if(!user[field]) {
+        throw new AppError(field);
+      }
+    });
+
     const queryEmail = await this.userRepository.findByEmail(email);
 
     if(queryEmail) {
       throw new AppError("E-mail already exists");
     }
-
-    if(!email) {
-      throw new AppError("Missing E-mail");
-    }
-
-    if(!password) {
-      throw new AppError("Missing E-mail");
-    }
-
-    if(!name) {
-      throw new AppError("Missing Name");
-    }
-
     
     const hashedPassword = await this.hashProvider.hashed(String(password));
 
