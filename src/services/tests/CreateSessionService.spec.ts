@@ -58,4 +58,20 @@ describe('CreateUser', () => {
       expect(err).toBeInstanceOf(AppError);
     }
   });
+
+  it('should not be able create user without name', async () => {
+    let err = undefined;
+
+    try {
+      await createUserService.execute({
+        email: 'teste@teste.com',
+        name: '',
+        password: '123456'
+      });
+    } catch(e) {
+      err = e;
+    } finally {
+      expect(err).toBeInstanceOf(AppError);
+    }
+  });
 });
