@@ -1,6 +1,7 @@
 import { FakeUserRepository } from "../../typeorm/repositories/fakes/FakeUserRepository";
 import { FakeHashProvider } from '../../providers/HashProvider/Fakes/FakeHashProvider';
 import { CreateUserService } from "../implementations/CreateUserService";
+import { AppError } from "../../errors/AppError";
 
 describe('CreateUser', () => {
   let fakeUserRepository: FakeUserRepository;
@@ -40,5 +41,21 @@ describe('CreateUser', () => {
     });
 
     expect(fakeHashProvider.hashed).toHaveBeenCalledWith('123456');
+  });
+
+  it('should not be able create user without email', async () => {
+    let err = undefined;
+
+    try {
+      await createUserService.execute({
+        email: '',
+        name: 'kaique caires',
+        password: '123456'
+      });
+    } catch(e) {
+      err = e;
+    } finally {
+      expect(err).toBeInstanceOf(AppError);
+    }
   });
 });
