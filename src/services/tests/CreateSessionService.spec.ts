@@ -90,4 +90,27 @@ describe('CreateUser', () => {
       expect(err).toBeInstanceOf(AppError);
     }
   });
+
+  it('should not be able create account if e-mail already exists', async () => {
+    let err = undefined;
+
+    try {
+      await createUserService.execute({
+        email: 'teste@teste.com',
+        name: 'kaique caires',
+        password: '123456'
+      });
+  
+      await createUserService.execute({
+        email: 'teste@teste.com',
+        name: 'kaique caires',
+        password: '123456'
+      });
+      
+    } catch(e) {
+      err = e;
+    } finally {
+      expect(err).toBeInstanceOf(AppError);
+    }
+  });
 });
