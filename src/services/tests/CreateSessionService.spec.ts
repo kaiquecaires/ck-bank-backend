@@ -2,7 +2,7 @@ import { IHashProvider } from '../../providers/HashProvider/models/IHashProvider
 import { ITokenProvider } from '../../providers/TokenProvider/models/ITokenProvider';
 import { IUserRepository } from '../../repositories/IUserRepository';
 import { FakeUserRepository } from '../../typeorm/repositories/fakes/FakeUserRepository';
-import { TokenProvider } from '../../providers/TokenProvider/Fakes/FakeTokenProvider';
+import { FakeTokenProvider } from '../../providers/TokenProvider/Fakes/FakeTokenProvider';
 import { FakeHashProvider } from '../../providers/HashProvider/Fakes/FakeHashProvider';
 import { CreateSessionService } from '../implementations/CreateSessionService';
 import { CreateUserService } from '../implementations/CreateUserService';
@@ -16,7 +16,7 @@ describe('CreateSession', () => {
 
   beforeEach(() => {
     userRepository = new FakeUserRepository();
-    tokenProvider = new TokenProvider();
+    tokenProvider = new FakeTokenProvider();
     hashProvider = new FakeHashProvider();
     createUserService = new CreateUserService(
       userRepository,
