@@ -45,4 +45,25 @@ describe('CreateSession', () => {
 
     expect(response.user).toHaveProperty('id');
   });
+
+  it('should be able ensure the hash provider was called', async () => {
+    jest.spyOn(hashProvider, 'compareHash').mockImplementationOnce(async () => {
+      return true;
+    });
+
+    const user = {
+      email: 'teste@teste.com',
+      name: 'kaique caires',
+      password: '123456'
+    }
+
+    await createUserService.execute(user);
+
+    await createSessionService.execute({
+      email: 'teste@teste.com',
+      password: '123456'
+    });
+
+    expect(hashProvider.compareHash).toHaveBeenCalledWith('123456', user.password);
+  });
 });
