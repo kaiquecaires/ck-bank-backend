@@ -6,6 +6,7 @@ import { FakeTokenProvider } from '../../providers/TokenProvider/Fakes/FakeToken
 import { FakeHashProvider } from '../../providers/HashProvider/Fakes/FakeHashProvider';
 import { CreateSessionService } from '../implementations/CreateSessionService';
 import { CreateUserService } from '../implementations/CreateUserService';
+import { AppError } from '../../errors/AppError';
 
 describe('CreateSession', () => {
   let createSessionService: CreateSessionService;
@@ -65,5 +66,28 @@ describe('CreateSession', () => {
     });
 
     expect(hashProvider.compareHash).toHaveBeenCalledWith('123456', user.password);
+  });
+
+  it('should not be able create a session without e-mail', async () => {
+    let err = undefined;
+
+    try {
+      const user = {
+        email: 'teste@teste.com',
+        name: 'kaique caires',
+        password: '123456'
+      }
+  
+      await createUserService.execute(user);
+  
+      await createSessionService.execute({
+        email: '',
+        password: '123456'
+      });
+    } catch (e) {
+      err = e;
+    } finally {
+      expect(err).toBeInstanceOf(AppError)
+    }
   });
 });
