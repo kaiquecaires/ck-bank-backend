@@ -113,4 +113,27 @@ describe('CreateSession', () => {
       expect(err).toBeInstanceOf(AppError);
     }
   });
+
+  it('should not be able create a session with wrong password', async () => {
+    let err = undefined;
+
+    try {
+      const user = {
+        email: 'teste@teste.com',
+        name: 'kaique caires',
+        password: '123456'
+      }
+  
+      await createUserService.execute(user);
+  
+      await createSessionService.execute({
+        email: 'teste@teste.com',
+        password: '1234567'
+      });
+    } catch (e) {
+      err = e;
+    } finally {
+      expect(err).toBeInstanceOf(AppError);
+    }
+  });
 });
