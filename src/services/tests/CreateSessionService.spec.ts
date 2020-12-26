@@ -87,7 +87,30 @@ describe('CreateSession', () => {
     } catch (e) {
       err = e;
     } finally {
-      expect(err).toBeInstanceOf(AppError)
+      expect(err).toBeInstanceOf(AppError);
+    }
+  });
+
+  it('should not be able create a session without password', async () => {
+    let err = undefined;
+
+    try {
+      const user = {
+        email: 'teste@teste.com',
+        name: 'kaique caires',
+        password: '123456'
+      }
+  
+      await createUserService.execute(user);
+  
+      await createSessionService.execute({
+        email: 'teste@teste.com',
+        password: ''
+      });
+    } catch (e) {
+      err = e;
+    } finally {
+      expect(err).toBeInstanceOf(AppError);
     }
   });
 });
