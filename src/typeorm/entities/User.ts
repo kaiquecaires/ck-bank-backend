@@ -26,6 +26,9 @@ export class User {
   @Column({ type: 'varchar' })
   name: string;
 
+  @Column({ type: 'float' })
+  balance: number;
+
   @CreateDateColumn({ type: 'date' })
   created_at: Date
 
