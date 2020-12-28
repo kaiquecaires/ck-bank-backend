@@ -40,6 +40,7 @@ describe('CreateTransaction', () => {
 
     try {
       await createTransaction.execute({
+        id: '',
         id_provider: user2.id,
         value: 100
       });
@@ -69,6 +70,7 @@ describe('CreateTransaction', () => {
     try {
       await createTransaction.execute({
         id: user2.id,
+        id_provider: '',
         value: 100
       });
     } catch(error) {
@@ -97,7 +99,8 @@ describe('CreateTransaction', () => {
     try {
       await createTransaction.execute({
         id: user1.id,
-        id_provider: user2.id
+        id_provider: user2.id,
+        value: null,
       });
     } catch(error) {
       err = error;
@@ -105,4 +108,4 @@ describe('CreateTransaction', () => {
       expect(err).toEqual(new AppError('Missing param: value'));
     }
   });
-})
+});
