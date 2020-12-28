@@ -24,7 +24,7 @@ export class FakeUserRepository implements IUserRepository {
     return new Promise(resolve => resolve(user));
   }
 
-  public async findByEmail(email: string): Promise<IUser> {
+  public async findByEmail(email: string): Promise<IUser | undefined> {
     const user = this.users.filter(user => user.email === email);
 
     return user[0];
@@ -34,5 +34,16 @@ export class FakeUserRepository implements IUserRepository {
     const user = this.users.filter(user => user.id === id);
 
     return user[0];
+  }
+
+  public async updateBalance(id: string, value: number): Promise<IUser | undefined> {
+    const userIndex = this.users.findIndex(user => user.id === id);
+    const user = await this.findById(id);
+
+    user.balance = user.balance + value;
+
+    this.users[userIndex] = user;
+
+    return this.users[userIndex];
   }
 }
