@@ -1,14 +1,14 @@
 import { AppError } from "../../errors/AppError";
 
 interface IRequest {
-  id: string,
-  id_provider: string,
+  id_receiver: string,
+  id_payer: string,
   value: number
 }
 
 export class CreateTransaction {
   public async execute(transactionData: IRequest): Promise<any> {
-    const requiredFields = ['id', 'id_provider', 'value'];
+    const requiredFields = ['id_receiver', 'id_payer', 'value'];
 
     for(const field of requiredFields) {
       if(!transactionData[field]) {

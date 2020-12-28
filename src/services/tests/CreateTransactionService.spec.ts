@@ -22,7 +22,7 @@ describe('CreateTransaction', () => {
     createTransaction = new CreateTransaction();
   });
 
-  it('should not be able to make a transaction between users if id is not provided', async () => {
+  it('should not be able to make a transaction between users if id_payer is not provided', async () => {
     let promiseUser1 = createUserService.execute({
       email: 'teste1@teste.com',
       name: 'kaique caires',
@@ -40,8 +40,8 @@ describe('CreateTransaction', () => {
 
     try {
       await createTransaction.execute({
-        id: '',
-        id_provider: user2.id,
+        id_receiver: user2.id,
+        id_payer: '',
         value: 100
       });
     } catch(error) {
@@ -51,7 +51,7 @@ describe('CreateTransaction', () => {
     }
   });
 
-  it('should not be able to make a transaction between users if id_provider is not provided', async () => {
+  it('should not be able to make a transaction between users if id_payer is not provided', async () => {
     let promiseUser1 = createUserService.execute({
       email: 'teste1@teste.com',
       name: 'kaique caires',
@@ -69,8 +69,8 @@ describe('CreateTransaction', () => {
 
     try {
       await createTransaction.execute({
-        id: user2.id,
-        id_provider: '',
+        id_receiver: user2.id,
+        id_payer: '',
         value: 100
       });
     } catch(error) {
@@ -98,8 +98,8 @@ describe('CreateTransaction', () => {
 
     try {
       await createTransaction.execute({
-        id: user1.id,
-        id_provider: user2.id,
+        id_receiver: user1.id,
+        id_payer: user2.id,
         value: null,
       });
     } catch(error) {
