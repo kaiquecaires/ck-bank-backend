@@ -49,4 +49,32 @@ describe('CreateTransaction', () => {
       expect(err).toEqual(new AppError('Missing param: id'));
     }
   });
+
+  it('should not be able to make a transaction between users if id_provider is not provided', async () => {
+    let promiseUser1 = createUserService.execute({
+      email: 'teste1@teste.com',
+      name: 'kaique caires',
+      password: '123456'
+    });
+    let promiseUser2 = createUserService.execute({
+      email: 'teste2@teste.com',
+      name: 'kaique caires',
+      password: '123456'
+    });
+
+    const [, user2] = await Promise.all([promiseUser1, promiseUser2]);
+
+    let err = null;
+
+    try {
+      await createTransaction.execute({
+        id: user2.id,
+        value: 100
+      });
+    } catch(error) {
+      err = error;
+    } finally {
+      expect(err).toEqual(new AppError('Missing param: id_provider'));
+    }
+  });
 })
