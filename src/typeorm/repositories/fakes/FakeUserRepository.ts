@@ -16,7 +16,7 @@ export class FakeUserRepository implements IUserRepository {
       password,
       name,
       balance,
-      id: String(new Date().getTime())
+      id: String(Math.random() * 100)
     };
 
     this.users.push(user);
@@ -36,14 +36,27 @@ export class FakeUserRepository implements IUserRepository {
     return user[0];
   }
 
-  public async updateBalance(id: string, value: number): Promise<IUser | undefined> {
+  public async updateBalance(
+    id: string,
+    value: number,
+    id_payer: string
+  ): Promise<boolean> {
     const userIndex = this.users.findIndex(user => user.id === id);
+    const userPayerIndex = this.users.findIndex(user => user.id === id_payer);
+
     const user = await this.findById(id);
+    const userPayer = await this.findById(id_payer);
 
-    user.balance = user.balance + value;
+    if (user && userPayer) {
+      user.balance = user.balance + value;
+      userPayer.balance = userPayer.balance - value;
+  
+      this.users[userIndex] = user;
+      this.users[userPayerIndex] = userPayer;
 
-    this.users[userIndex] = user;
+      return true;
+    }
 
-    return this.users[userIndex];
+    return false;
   }
 }

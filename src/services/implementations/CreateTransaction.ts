@@ -1,4 +1,5 @@
 import { AppError } from "../../errors/AppError";
+import { IUserRepository } from "../../repositories/IUserRepository";
 
 interface IRequest {
   id_receiver: string,
@@ -7,7 +8,13 @@ interface IRequest {
 }
 
 export class CreateTransaction {
-  public async execute(transactionData: IRequest): Promise<any> {
+  private userRepository: IUserRepository;
+
+  constructor(userRepository: IUserRepository) {
+    this.userRepository = userRepository;
+  }
+
+  public async execute(transactionData: IRequest): Promise<boolean> {
     const requiredFields = ['id_receiver', 'id_payer', 'value'];
 
     for(const field of requiredFields) {
@@ -15,5 +22,13 @@ export class CreateTransaction {
         throw new AppError(`Missing param: ${field}`);
       }
     }
+
+    const response = await this.userRepository.updateBalance(
+      transactionData.id_receiver,
+      transactionData.value,
+      transactionData.id_payer
+    );
+
+    return response;
   }
 }
