@@ -12,16 +12,16 @@ export class User {
   id: string;
 
   @Column({ type: 'varchar' })
-  id_receiver: string;
+  id_user: string;
 
   @Column({ type: 'varchar' })
-  id_payer: string;
+  type: string;
 
   @Column({ type: 'varchar' })
   transaction_data: string;
 
   @Column({ type: 'float' })
-  balance: number;
+  value: number;
 
   @CreateDateColumn({ type: 'date' })
   created_at: Date

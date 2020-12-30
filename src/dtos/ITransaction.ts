@@ -1,7 +1,7 @@
 export interface ITransaction {
   id: string;
-  id_receiver: string;
-  id_payer: string;
-  transaction_data: string;
+  id_user: string;
+  type: 'income' | 'outcome';
+  transaction_date: string;
   value: number
 }

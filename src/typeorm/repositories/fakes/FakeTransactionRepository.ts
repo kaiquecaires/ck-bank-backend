@@ -1,4 +1,3 @@
-import { isConstructorDeclaration } from "typescript";
 import { ITransaction } from "../../../dtos/ITransaction";
 import { ITransactionRepository } from "../../../repositories/ITransactionRepository";
 

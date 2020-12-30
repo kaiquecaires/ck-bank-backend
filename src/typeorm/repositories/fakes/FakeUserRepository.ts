@@ -37,22 +37,19 @@ export class FakeUserRepository implements IUserRepository {
   }
 
   public async updateBalance(
-    id: string,
+    id_user: string,
     value: number,
-    id_payer: string
+    type: 'income' | 'outcome'
   ): Promise<boolean> {
-    const userIndex = this.users.findIndex(user => user.id === id);
-    const userPayerIndex = this.users.findIndex(user => user.id === id_payer);
+    const userIndex = this.users.findIndex(user => user.id === id_user);
+    const user = await this.findById(id_user);
 
-    const user = await this.findById(id);
-    const userPayer = await this.findById(id_payer);
-
-    if (user && userPayer) {
-      user.balance = user.balance + value;
-      userPayer.balance = userPayer.balance - value;
-  
-      this.users[userIndex] = user;
-      this.users[userPayerIndex] = userPayer;
+    if (user) {
+      if (type === 'income') {
+        this.users[userIndex].balance = this.users[userIndex].balance + value
+      } else {
+        this.users[userIndex].balance = this.users[userIndex].balance - value
+      }
 
       return true;
     }
