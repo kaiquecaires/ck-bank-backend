@@ -1,4 +1,6 @@
+import { ITransaction } from "../../dtos/ITransaction";
 import { AppError } from "../../errors/AppError";
+import { ITransactionRepository } from "../../repositories/ITransactionRepository";
 import { IUserRepository } from "../../repositories/IUserRepository";
 
 interface IRequest {
@@ -9,12 +11,14 @@ interface IRequest {
 
 export class CreateTransaction {
   private userRepository: IUserRepository;
+  private transactionRepository: ITransactionRepository;
 
-  constructor(userRepository: IUserRepository) {
+  constructor(userRepository: IUserRepository, transactionRepository: ITransactionRepository) {
     this.userRepository = userRepository;
+    this.transactionRepository = transactionRepository;
   }
 
-  public async execute(transactionData: IRequest): Promise<boolean> {
+  public async execute(transactionData: IRequest): Promise<ITransaction> {
     const requiredFields = ['id_receiver', 'id_payer', 'value'];
 
     for(const field of requiredFields) {
@@ -23,12 +27,23 @@ export class CreateTransaction {
       }
     }
 
+    const { id_payer, value, id_receiver } = transactionData
+
     const response = await this.userRepository.updateBalance(
-      transactionData.id_receiver,
-      transactionData.value,
-      transactionData.id_payer
+      id_receiver,
+      value,
+      id_payer
     );
 
-    return response;
+    if (response) {
+      return await this.transactionRepository.createTransaction({
+        id_payer,
+        id_receiver,
+        value,
+        transaction_data: new Date().toUTCString()
+      });
+    } else {
+      throw new AppError('Error on transaction!')
+    }
   }
 }

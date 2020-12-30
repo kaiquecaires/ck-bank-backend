@@ -5,22 +5,27 @@ import { IUserRepository } from '../../repositories/IUserRepository';
 import { FakeUserRepository } from '../../typeorm/repositories/fakes/FakeUserRepository';
 import { CreateUserService } from '../implementations/CreateUserService';
 import { AppError } from '../../errors/AppError';
+import { ITransactionRepository } from '../../repositories/ITransactionRepository';
+import { FakeTransactionRepository } from '../../typeorm/repositories/fakes/FakeTransactionRepository';
 
 describe('CreateTransaction', () => {
   let userRepository: IUserRepository;
   let hashProvider: IHashProvider;
   let createUserService: CreateUserService;
   let createTransaction: CreateTransaction;
+  let transactionRepository: ITransactionRepository
 
   beforeEach(() => {
     userRepository = new FakeUserRepository();
     hashProvider = new FakeHashProvider();
+    transactionRepository = new FakeTransactionRepository();
     createUserService = new CreateUserService(
       userRepository,
       hashProvider
     );
     createTransaction = new CreateTransaction(
-      userRepository
+      userRepository,
+      transactionRepository
     );
   });
 
@@ -129,6 +134,8 @@ describe('CreateTransaction', () => {
       id_payer: user2.id,
       value: 1000,
     });
+
+    console.log(response)
 
     expect(response).toBeTruthy()
   });
