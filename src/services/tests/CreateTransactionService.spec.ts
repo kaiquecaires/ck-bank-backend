@@ -19,10 +19,12 @@ describe('CreateTransaction', () => {
       userRepository,
       hashProvider
     );
-    createTransaction = new CreateTransaction();
+    createTransaction = new CreateTransaction(
+      userRepository
+    );
   });
 
-  it('should not be able to make a transaction between users if id_payer is not provided', async () => {
+  it('should not be able to make a transaction between users if id_receiver is not provided', async () => {
     let promiseUser1 = createUserService.execute({
       email: 'teste1@teste.com',
       name: 'kaique caires',
@@ -40,14 +42,14 @@ describe('CreateTransaction', () => {
 
     try {
       await createTransaction.execute({
-        id_receiver: user2.id,
-        id_payer: '',
+        id_receiver: '',
+        id_payer: user2.id,
         value: 100
       });
     } catch(error) {
       err = error;
     } finally {
-      expect(err).toEqual(new AppError('Missing param: id'));
+      expect(err).toEqual(new AppError('Missing param: id_receiver'));
     }
   });
 
@@ -76,7 +78,7 @@ describe('CreateTransaction', () => {
     } catch(error) {
       err = error;
     } finally {
-      expect(err).toEqual(new AppError('Missing param: id_provider'));
+      expect(err).toEqual(new AppError('Missing param: id_payer'));
     }
   });
 
@@ -107,5 +109,27 @@ describe('CreateTransaction', () => {
     } finally {
       expect(err).toEqual(new AppError('Missing param: value'));
     }
+  });
+
+  it('should be able to make a transaction between users', async () => {
+    const user1 = await createUserService.execute({
+      email: 'teste1@teste.com',
+      name: 'kaique caires',
+      password: '123456'
+    });
+
+    const user2 = await createUserService.execute({
+      email: 'teste2@teste.com',
+      name: 'kaique caires',
+      password: '123456'
+    });
+
+    const response = await createTransaction.execute({
+      id_receiver: user1.id,
+      id_payer: user2.id,
+      value: 1000,
+    });
+
+    expect(response).toBeTruthy()
   });
 });
