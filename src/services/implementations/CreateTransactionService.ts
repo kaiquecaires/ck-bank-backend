@@ -9,7 +9,7 @@ interface IRequest {
   value: number
 }
 
-export class CreateTransaction {
+export class CreateTransactionService {
   private userRepository: IUserRepository;
   private transactionRepository: ITransactionRepository;
 

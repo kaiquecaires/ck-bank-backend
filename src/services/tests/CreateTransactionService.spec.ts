@@ -1,4 +1,4 @@
-import { CreateTransaction } from '../implementations/CreateTransaction';
+import { CreateTransactionService } from '../implementations/CreateTransactionService';
 import { FakeHashProvider } from '../../providers/HashProvider/Fakes/FakeHashProvider';
 import { IHashProvider } from '../../providers/HashProvider/models/IHashProvider';
 import { IUserRepository } from '../../repositories/IUserRepository';
@@ -12,7 +12,7 @@ describe('CreateTransaction', () => {
   let userRepository: IUserRepository;
   let hashProvider: IHashProvider;
   let createUserService: CreateUserService;
-  let createTransaction: CreateTransaction;
+  let createTransaction: CreateTransactionService;
   let transactionRepository: ITransactionRepository
 
   beforeEach(() => {
@@ -23,7 +23,7 @@ describe('CreateTransaction', () => {
       userRepository,
       hashProvider
     );
-    createTransaction = new CreateTransaction(
+    createTransaction = new CreateTransactionService(
       userRepository,
       transactionRepository
     );
