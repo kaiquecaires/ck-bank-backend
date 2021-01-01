@@ -17,5 +17,5 @@ The project is about a bank to transfer money between people.
 
 ## `Links`
 
-Access to web version [here](https://github.com/kaiquecaires/ck-bank).
+Access to web version [here](https://github.com/kaiquecaires/ck-bank). </br>
 Access to mobile version [here](https://github.com/kaiquecaires/ck-bank-app).
