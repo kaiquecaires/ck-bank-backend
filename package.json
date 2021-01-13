@@ -23,7 +23,8 @@
     "ts-node": "^9.1.1"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test:unit": "yarn test --watch -c jest-unit-config.js",
     "test:staged": "jest"
   }
 }
