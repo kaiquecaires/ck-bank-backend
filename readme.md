@@ -6,7 +6,7 @@ This is a personal project to train back-end developer skills.
 
 The project is about a bank to transfer money between people.
 
-## `Tools`
+## `Features`
 
  - [x] Typescript
  - [x] Clean Architecture
