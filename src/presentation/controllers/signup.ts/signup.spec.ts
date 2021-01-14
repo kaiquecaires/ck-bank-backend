@@ -1,4 +1,4 @@
-import { Controller } from '../../protocols/controller'
+import { Controller } from '../../protocols'
 import { SignUpController } from './signup'
 import { MissingParamError } from '../../errors/missing-param-error'
 
